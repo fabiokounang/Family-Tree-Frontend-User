@@ -1,1 +1,24 @@
-/* You can add global styles to this file, and also import other style files */
+/* @import '~ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
+@import '~ngx-owl-carousel-o/lib/styles/scss/owl.theme.default'; */
+
+@font-face {
+  font-family: 'unique';
+  src: url(./assets/AvenirLTStd-Black.woff);
+}
+
+@font-face {
+  font-family: 'unique-sub';
+  src: url(./assets/AvenirLTStd-Book.woff);
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: unique;
+}
+
+html, body { 
+  width: 100%;
+  height: 100vh;
+}

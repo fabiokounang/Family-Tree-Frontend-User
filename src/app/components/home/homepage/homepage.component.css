@@ -1,0 +1,39 @@
+.profile {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+img.img-profile {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.biodata {
+  padding-left: 1rem;
+  font-size: 15px;
+}
+
+.username {
+  font-weight: bold;
+}
+
+.latin {
+  color: grey;
+}
+
+.welcome h1 {
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.calendar {
+  margin-bottom: 2rem;
+}
+
+.banner {
+
+}

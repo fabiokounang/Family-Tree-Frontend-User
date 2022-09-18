@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { SwPush } from "@angular/service-worker";
+import { slideInAnimation } from './animation';
 import { ApiService } from './services/api.service';
 
 @Component({
@@ -17,7 +18,7 @@ export class AppComponent {
     if ('serviceWorker' in navigator) {
       try {
         console.log('Service worker active');
-        this.subscribeToNotifications();
+        // this.subscribeToNotifications();
       } catch (error) {
         console.log(error);
       }
@@ -27,7 +28,7 @@ export class AppComponent {
   subscribeToNotifications() {
     console.log('masuk sini kah ?');
     this.swPush.requestSubscription({ serverPublicKey: this.VAPID_PUBLIC_KEY}).then(sub => {
-      this.apiService.connection('POST', 'http://localhost:3000/api/broadcast/subscribe', sub).subscribe({
+      this.apiService.connection('POST', 'https://frozen-fortress-78679.herokuapp.com/api/broadcast/subscribe', sub).subscribe({
         next: (response: any) => {
           console.log(response, 'response');
         },

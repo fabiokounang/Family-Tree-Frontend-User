@@ -1,0 +1,29 @@
+<div class="wrapper">
+  <div class="profile">
+    <img class="img-profile" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6GfaS_99vn2iGc4BtGtoOw9SkVYoenwFcgg&usqp=CAU" alt="">
+    <div class="biodata">
+      <div class="username">
+        Username
+      </div>
+      <div class="latin">
+        Latin name (Chinese name)
+      </div>
+    </div>
+  </div>
+
+  <div class="calendar">
+    <mat-card>
+      <mat-calendar></mat-calendar>
+    </mat-card>
+  </div>
+
+  <div class="banner">
+    <owl-carousel-o [options]="customOptions">
+      <ng-container *ngFor="let slide of dynamicSlides; let i = index">
+        <ng-template carouselSlide [id]="slide.id">
+          <img [src]="slide.src" [alt]="slide.alt" [title]="slide.title">
+        </ng-template>
+      </ng-container>
+    </owl-carousel-o>
+  </div>
+</div>

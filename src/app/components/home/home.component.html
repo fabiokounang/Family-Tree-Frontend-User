@@ -1,0 +1,54 @@
+<mat-sidenav-container class="example-container">
+
+  <mat-sidenav (window:resize)="onResize()" #sidenav [mode]="modeSide" [opened]="open" role="navigation">
+
+    <!-- <div class="profile-container">
+      <p class="text">
+        <span class="circle"></span>
+        {{username}}
+      </p>
+    </div> -->
+
+    <mat-nav-list>
+      <a routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" mat-list-item routerLink="/home/admin" (click)="onToggle(sidenav)">
+        <mat-icon>person</mat-icon>
+        <span class="nav-caption">Admin</span>
+      </a>
+    </mat-nav-list>
+
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar>
+      <div>
+        <button (click)="onToggleButton(sidenav)" mat-icon-button>
+          <mat-icon class="material-icons">menu</mat-icon>
+        </button>
+      </div>
+
+      <!-- <span class="example-spacer"></span>
+      <div>
+        <button mat-button (click)="onLogout(sidenav)">Logout</button>
+      </div> -->
+
+    </mat-toolbar>
+
+    <!-- <div [@routeAnimations]="getRouteAnimationData(outlet)" style="margin: 15px"> -->
+    <div style="margin: 15px; padding: 1.5rem 1rem">
+      <router-outlet #outlet="outlet"></router-outlet>
+    </div>
+
+    <footer class="footer">
+      <div routerLink="/home/homepage" matRipple class="menu-bottom">
+        <mat-icon>home</mat-icon>
+      </div>
+      <div matRipple class="menu-bottom">
+        <mat-icon>people</mat-icon>
+      </div>
+      <div routerLink="/home/profile" matRipple class="menu-bottom">
+        <mat-icon>person</mat-icon>
+      </div>
+    </footer>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>
