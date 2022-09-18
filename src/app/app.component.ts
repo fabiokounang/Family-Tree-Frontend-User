@@ -18,7 +18,7 @@ export class AppComponent {
     if ('serviceWorker' in navigator) {
       try {
         console.log('Service worker active');
-        // this.subscribeToNotifications();
+        this.subscribeToNotifications();
       } catch (error) {
         console.log(error);
       }
