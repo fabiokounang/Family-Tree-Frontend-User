@@ -1,6 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { MatCalendar, MatCalendarCellClassFunction, MatCalendarCellCssClasses } from '@angular/material/datepicker';
+import { MatDialog } from '@angular/material/dialog';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { CalendarEventComponent } from 'src/app/dialog/calendar-event/calendar-event.component';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -9,13 +12,18 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./homepage.component.css'],
 })
 export class HomepageComponent implements OnInit {
+  selectedDate: any = null;
   selectedCalendar: any = null;
+  month = new Date().getMonth() + 1;
+  objectKeys = Object.keys;
+  calendar: any = null;
   user: any = null;
   themes: any[] = [];
   theme: any = null;
   loader: boolean = false;
   color: string = '#FFFFFF';
   text: string = '#FFFFFF';
+  emptyDay: any = [];
   dynamicSlides = [
     {
       id: '1',
@@ -73,8 +81,9 @@ export class HomepageComponent implements OnInit {
     },
     nav: true
   }
-
-  constructor (private apiService: ApiService) { }
+  months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  
+  constructor (private apiService: ApiService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.user = {
@@ -85,6 +94,7 @@ export class HomepageComponent implements OnInit {
     }
     
     this.getThemes();
+    this.getCalendar();
   }
 
   getThemes () {
@@ -99,6 +109,25 @@ export class HomepageComponent implements OnInit {
           }
         });
         this.fillData();
+      }, 
+      error: ({ error }: HttpErrorResponse) => {
+        this.loader = false;
+        this.apiService.processErrorHttp(!error.error ? error : error.error);
+      },
+      complete: () => {
+        this.loader = false;
+      }
+    });
+  }
+
+  getCalendar () {
+    this.apiService.connection('POST', 'master-calendar-active').subscribe({
+      next: (response: any) => {
+        this.calendar = response.value;
+        const year = new Date().getFullYear();
+        const d = `${this.months[this.month - 1]} 1, ${year} 00:00:01`;
+        const day = new Date(d).getDay();
+        this.emptyDay = Array.from(Array(day).keys());
       }, 
       error: ({ error }: HttpErrorResponse) => {
         this.loader = false;
@@ -131,7 +160,21 @@ export class HomepageComponent implements OnInit {
     const theme = this.themes.find(val => val.id == this.theme);
     this.color = theme.color;
     this.text = theme.text;
-    console.log(theme)
+  }
+
+  onOpenFormEvent (calendar, month, day) {
+    if (calendar.calendar[month][day] && calendar.calendar[month][day].length > 0) {
+      this.dialog.open(CalendarEventComponent, {
+        width: '900px',
+        data: calendar.calendar[month][day]
+      })
+    } else {
+      this.apiService.callSnack('No event', 'Dismiss');
+    }
+  }
+
+  changeMonth (num: number) {
+    if (this.month + num > 0 && this.month + num <= 12) this.month = this.month + num;
   }
 
 }

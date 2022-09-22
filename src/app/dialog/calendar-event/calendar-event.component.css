@@ -1,0 +1,16 @@
+.flex {
+  word-wrap: break-word;
+  padding-bottom: 1rem;
+}
+
+.flex-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 20px;
+  display:inline-block;
+  font-weight: bold;
+  padding-bottom: .4rem;
+}

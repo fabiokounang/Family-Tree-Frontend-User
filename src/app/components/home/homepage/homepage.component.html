@@ -23,10 +23,34 @@
     </div>
   </div>
 
-  <div class="calendar">
-    <mat-card>
-      <mat-calendar></mat-calendar>
-    </mat-card>
+  <div *ngIf="calendar" class="calendar">       
+    <div class="month">
+      {{months[month - 1]}} {{calendar.year}}
+      <div class="icon-arrow">
+        <button [disabled]="month == 1" (click)="changeMonth(-1)" mat-icon-button>
+          <mat-icon marRipple>chevron_left</mat-icon>
+        </button>
+        <button [disabled]="month == 12" (click)="changeMonth(1)" mat-icon-button>
+          <mat-icon marRipple>chevron_right</mat-icon>
+        </button>
+      </div>
+    </div>
+    <span *ngFor="let d of emptyDay" class="day">
+      {{' '}}
+    </span>
+    <span 
+      class="day" 
+      (click)="onOpenFormEvent(calendar, month, day)" 
+      [matTooltip]="calendar.calendar[month][day].length <= 1 ? calendar.calendar[month][day].length + ' event' : calendar.calendar[month][day].length + ' events'" 
+      [ngClass]="{ isEvent: calendar.calendar[month][day].length > 0 }" 
+      appWeekend 
+      [year]="calendar.year" 
+      [month]="month" 
+      [day]="day" 
+      [event]="calendar.calendar[month][day].length"
+      *ngFor="let day of objectKeys(calendar.calendar[month])">
+      {{day}}
+    </span>
   </div>
 
   <div class="banner">

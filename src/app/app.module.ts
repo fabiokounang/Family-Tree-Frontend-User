@@ -23,6 +23,8 @@ import { SpinnerComponent } from './helper/spinner/spinner.component';
 import { ProgressBarComponent } from './helper/progress-bar/progress-bar.component';
 import { FamilyTreeComponent } from './components/home/family-tree/family-tree.component';
 import { AuthInterceptor } from './interceptor/auth-interceptor';
+import { CalendarEventComponent } from './dialog/calendar-event/calendar-event.component';
+import { WeekendDirective } from './directives/weekend.directive';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ import { AuthInterceptor } from './interceptor/auth-interceptor';
     SpinnerComponent,
     ProgressBarComponent,
     FamilyTreeComponent,
+    CalendarEventComponent,
+    WeekendDirective
   ],
   imports: [
     BrowserModule,
