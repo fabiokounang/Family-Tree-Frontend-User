@@ -1,16 +1,21 @@
 <div class="wrapper">
-  <form class="form">
+  <form (ngSubmit)="onSignin()" class="form" [formGroup]="signinForm">
     <div class="form-input">
       <mat-form-field>
         <mat-label>Username</mat-label>
-        <input type="text" matInput>
+        <input formControlName="username" type="text" matInput>
+        <mat-error *ngIf="signinForm.get('username').hasError('required')">Username required</mat-error>
+        <mat-error *ngIf="signinForm.get('username').hasError('maxlength')">Username max length 30 characters</mat-error>
       </mat-form-field>
     </div>
 
     <div class="form-input">
       <mat-form-field>
         <mat-label>Password</mat-label>
-        <input type="password" matInput>
+        <input formControlName="password" [type]="type" matInput>
+        <mat-icon matSuffix matRipple (click)="onSetVisibility()">{{eye}}</mat-icon>
+        <mat-error *ngIf="signinForm.get('password').hasError('required')">Password required</mat-error>
+        <mat-error *ngIf="signinForm.get('password').hasError('minlength')">Password min length 8</mat-error>
       </mat-form-field>
       <div class="common">
         <small class="account">Don't have an account ? <span class="signup">Signup here</span></small>
@@ -20,7 +25,8 @@
     
 
     <div class="button-container">
-      <button routerLink="/home/homepage" mat-raised-button color="primary">Signin</button>
+      <button type="submit" *ngIf="!loader" [disabled]="signinForm.invalid || loader" mat-raised-button color="primary">Signin</button>
+      <app-spinner [loader]="loader" [diameter]="20"></app-spinner>
     </div>
   </form>
 </div>

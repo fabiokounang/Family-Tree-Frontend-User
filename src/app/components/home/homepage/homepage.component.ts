@@ -1,5 +1,7 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-homepage',
@@ -8,6 +10,12 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
 })
 export class HomepageComponent implements OnInit {
   selectedCalendar: any = null;
+  user: any = null;
+  themes: any[] = [];
+  theme: any = null;
+  loader: boolean = false;
+  color: string = '#FFFFFF';
+  text: string = '#FFFFFF';
   dynamicSlides = [
     {
       id: '1',
@@ -66,8 +74,64 @@ export class HomepageComponent implements OnInit {
     nav: true
   }
 
-  constructor() { }
+  constructor (private apiService: ApiService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.user = {
+      username: this.apiService.getLocalStorageUsername(),
+      latin_name: this.apiService.getLocalStorageLatin(),
+      chinese_name: this.apiService.getLocalStorageChinese(),
+      no_anggota: this.apiService.getLocalStorageNoAnggota()
+    }
+    
+    this.getThemes();
+  }
+
+  getThemes () {
+    this.apiService.connection('POST', 'master-theme').subscribe({
+      next: (response: any) => {
+        this.themes = response.values.map((val) => {
+          return {
+            id: val._id,
+            name: val.theme,
+            color: val.color,
+            text: val.text
+          }
+        });
+        this.fillData();
+      }, 
+      error: ({ error }: HttpErrorResponse) => {
+        this.loader = false;
+        this.apiService.processErrorHttp(!error.error ? error : error.error);
+      },
+      complete: () => {
+        this.loader = false;
+      }
+    });
+  }
+
+  onSelectTheme (event) {
+    this.apiService.connection('POST', 'master-theme-user', { theme: event.value }).subscribe({
+      next: (response: any) => {
+        localStorage.setItem('theme', event.value);
+        this.fillData();
+      }, 
+      error: ({ error }: HttpErrorResponse) => {
+        this.loader = false;
+        this.apiService.processErrorHttp(!error.error ? error : error.error);
+      },
+      complete: () => {
+        this.loader = false;
+      }
+    });
+  }
+
+  fillData () {
+    this.theme = this.apiService.getLocalStorageTheme();
+    const theme = this.themes.find(val => val.id == this.theme);
+    this.color = theme.color;
+    this.text = theme.text;
+    console.log(theme)
+  }
 
 }

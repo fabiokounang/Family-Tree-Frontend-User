@@ -1,13 +1,25 @@
 <div class="wrapper">
-  <div class="profile">
+  <div class="profile" [ngStyle]="{
+    background: color,
+    color: text 
+  }">
     <img class="img-profile" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6GfaS_99vn2iGc4BtGtoOw9SkVYoenwFcgg&usqp=CAU" alt="">
     <div class="biodata">
-      <div class="username">
-        Username
+      <div [ngStyle]="{ color: text }" class="username">
+        {{user.username}}
       </div>
-      <div class="latin">
-        Latin name (Chinese name)
+      <div [ngStyle]="{ color: text }" class="latin">
+        {{ user.latin_name }} ({{ user.chinese_name }})
       </div>
+
+      <div [ngStyle]="{ color: text }" class="latin">
+        {{ user.no_anggota }}
+      </div>
+      <mat-select class="theme" [ngStyle]="{ color: text }" (selectionChange)="onSelectTheme($event)" placeholder="Pick a theme" [(ngModel)]="theme">
+        <mat-option *ngFor="let value of themes" [value]="value.id">
+          {{value.name | titlecase}}
+        </mat-option>
+      </mat-select>
     </div>
   </div>
 

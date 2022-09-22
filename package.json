@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "~13.2.0",
     "@angular/router": "~13.2.0",
     "@angular/service-worker": "~13.2.0",
+    "@balkangraph/familytree.js": "^1.6.8",
     "ngx-owl-carousel-o": "^7.0.4",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",

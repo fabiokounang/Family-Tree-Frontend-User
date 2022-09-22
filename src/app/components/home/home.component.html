@@ -34,7 +34,7 @@
     </mat-toolbar>
 
     <!-- <div [@routeAnimations]="getRouteAnimationData(outlet)" style="margin: 15px"> -->
-    <div style="margin: 15px; padding: 1.5rem 1rem">
+    <div style="margin: 15px; padding: 2.5rem 1rem">
       <router-outlet #outlet="outlet"></router-outlet>
     </div>
 
@@ -42,7 +42,7 @@
       <div routerLink="/home/homepage" matRipple class="menu-bottom">
         <mat-icon>home</mat-icon>
       </div>
-      <div matRipple class="menu-bottom">
+      <div routerLink="/home/family-tree" matRipple class="menu-bottom">
         <mat-icon>people</mat-icon>
       </div>
       <div routerLink="/home/profile" matRipple class="menu-bottom">
